@@ -22,7 +22,7 @@ const LoginPage = () => {
     }
   }
   return (
-    <Container>
+    <Container p="25px" bg="#50e3c2" marginTop="30px" borderRadius="10px" color="black">
       <Form
         type="email"
         name="email"
@@ -30,7 +30,7 @@ const LoginPage = () => {
         children="Email"
         placeholder="Enter email"
       />
-      <Button onClick={login}>Login</Button>
+      <Button bg="lightGrey" onClick={login} marginTop="15px">Login</Button>
     </Container>
   );
 };

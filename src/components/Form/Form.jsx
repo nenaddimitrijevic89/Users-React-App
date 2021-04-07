@@ -13,6 +13,8 @@ const Form = ({ type, name, value, onChange, children, placeholder }) => {
         onChange={(e) => onChange(e.target.value, name)}
         placeholder={placeholder}
         required
+        backgroundColor="white"
+        color="black"
       />
     </FormControl>
   );
