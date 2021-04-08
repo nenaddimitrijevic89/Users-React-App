@@ -6,7 +6,7 @@ export const validateEmail = (email) => {
     return re.test(email.toLowerCase());
   };
 
-export const validationToaster = (email) => {
+export const validationLogin = (email) => {
     const valid = validateEmail(email);
     if(!email || !valid){
       return ERROR_EMAIL;

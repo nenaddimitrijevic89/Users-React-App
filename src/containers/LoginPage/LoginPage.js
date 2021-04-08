@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Button, Container } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/toast";
-import Form from "../../components/Form/Form";
-import { validationToaster } from "../../shared/utilities";
+import InputEl from "../../components/InputEl/InputEl";
+import { validationLogin } from "../../shared/utilities";
 import { useHistory } from "react-router-dom";
 
 const LoginPage = () => {
@@ -11,26 +11,35 @@ const LoginPage = () => {
   const history = useHistory();
 
   const set = (data) => {
-    setEmail(data)
-  }
+    setEmail(data);
+  };
 
   const login = () => {
-    const toaster = validationToaster(email);
+    const toaster = validationLogin(email);
     toast(toaster);
-    if(toaster.status === "success"){
-      history.push("/success")
+    if (toaster.status === "success") {
+      history.push("/users");
     }
-  }
+  };
+
   return (
-    <Container p="25px" bg="#50e3c2" marginTop="30px" borderRadius="10px" color="black">
-      <Form
+    <Container
+      p="25px"
+      borderColor="#50e3c2"
+      borderWidth="3px"
+      marginTop="30px"
+      borderRadius="10px"
+    >
+      <InputEl
         type="email"
         name="email"
         onChange={set}
         children="Email"
         placeholder="Enter email"
       />
-      <Button bg="lightGrey" onClick={login} marginTop="15px">Login</Button>
+      <Button bg="lightGrey" color="black" onClick={login} marginTop="15px">
+        Login
+      </Button>
     </Container>
   );
 };

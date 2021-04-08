@@ -2,31 +2,31 @@ import { Button } from "@chakra-ui/button";
 import { Container } from "@chakra-ui/layout";
 import { Table, Tbody, Th, Thead, Tr } from "@chakra-ui/table";
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router";
+import { useParams } from "react-router";
 import Loader from "../../components/Loader/Loader";
 import User from "../../components/User/User";
 import withAuth from "../../hoc/withAuth";
 import { userService } from "../../services/userService";
 
-const UsersPage = () => {
-  const [users, setUsers] = useState([]);
+const UserPage = () => {
+  const [user, setUser] = useState();
   const [loader, setLoader] = useState(true);
-  const history = useHistory();
+  let { id } = useParams();
 
-  const getInitUsers = async () => {
-    const fetchedUsers = await userService.getUsers();
-    setUsers(fetchedUsers);
+  const getSingleUser = async (id) => {
+    const fetchedUser = await userService.getUser(id);
+    setUser(fetchedUser);
     setLoader(false);
   };
 
   useEffect(() => {
-    getInitUsers();
-  }, []);
+    getSingleUser(id);
+  }, [id]);
 
   return loader ? (
     <Loader />
   ) : (
-    <Container maxW="container.lg">
+    <Container maxW="container.xl">
       <Table variant="simple" marginTop="15px">
         <Thead>
           <Tr>
@@ -34,17 +34,20 @@ const UsersPage = () => {
             <Th>Name</Th>
             <Th>Email</Th>
             <Th>City</Th>
+            <Th>Street</Th>
+            <Th>Username</Th>
+            <Th>Phone</Th>
+            <Th>Website</Th>
           </Tr>
         </Thead>
         <Tbody>
-          {users.map((user) => (
-            <User user={user} key={user.id} />
-          ))}
+          <User user={user} detailed />
         </Tbody>
       </Table>
-      <Button marginTop="15px" onClick={() => history.push("/createuser")}>Create new user</Button>
+      <Button margin="15px">Edit</Button>
+      <Button margin="15px">Delete</Button>
     </Container>
   );
 };
 
-export default withAuth(UsersPage);
+export default withAuth(UserPage);
