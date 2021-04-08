@@ -2,7 +2,7 @@ import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import React from "react";
 
-const Form = ({ type, name, value, onChange, children, placeholder }) => {
+const InputEl = ({ type, name, value, onChange, children, placeholder }) => {
   return (
     <FormControl id={name} marginTop="15px">
       <FormLabel>{children}</FormLabel>
@@ -13,11 +13,9 @@ const Form = ({ type, name, value, onChange, children, placeholder }) => {
         onChange={(e) => onChange(e.target.value, name)}
         placeholder={placeholder}
         required
-        backgroundColor="white"
-        color="black"
       />
     </FormControl>
   );
 };
 
-export default Form;
+export default InputEl;
