@@ -1,6 +1,12 @@
 import { baseUrl } from "../shared/baseUrl";
 import { User } from "../entities/user";
-import { ERROR_CREATE, ERROR_UPDATE, SUCCESS, SUCCESS_EDIT } from "../shared/constants";
+import {
+  ERROR_CREATE,
+  ERROR_UPDATE,
+  SUCCESS,
+  SUCCESS_DELETE,
+  SUCCESS_EDIT,
+} from "../shared/constants";
 
 export const userService = {
   getUsers: () =>
@@ -19,6 +25,10 @@ export const userService = {
   deleteUser: (id) =>
     fetch(`${baseUrl}/${id}`, {
       method: "DELETE",
+    }).then((response) => {
+      if (response.status === 200) {
+        return SUCCESS_DELETE;
+      }
     }),
 
   createUser: (data) =>
@@ -26,9 +36,7 @@ export const userService = {
       method: "POST",
       body: JSON.stringify(data),
     }).then((response) => {
-      console.log(response)
       if (response.status === 201) {
-        console.log(SUCCESS)
         return SUCCESS;
       } else {
         return ERROR_CREATE;

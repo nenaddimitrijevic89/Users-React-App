@@ -14,8 +14,7 @@ import {
 } from "../../shared/constants";
 import { validateEmail } from "../../shared/utilities";
 
-const UserForm = ({ edit }) => {
-  console.log(edit);
+const UserForm = ({ isEdit }) => {
   const [user, setUser] = useState({});
   const toast = useToast();
   const { id } = useParams();
@@ -26,16 +25,13 @@ const UserForm = ({ edit }) => {
     setUser(fetchedUser);
   };
 
-  const loadCreateUser = async () => {
-    const toaster = await userService.createUser(user);
-    toast(toaster);
-    if (toaster.status === "success") {
-      history.push("/users");
+  const loadService = async () => {
+    let toaster = null;
+    if (isEdit) {
+      toaster = await userService.editUser(user, id);
+    } else {
+      toaster = await userService.createUser(user);
     }
-  };
-
-  const loadEditUser = async () => {
-    const toaster = await userService.editUser(user, id);
     toast(toaster);
     if (toaster.status === "success") {
       history.push("/users");
@@ -48,6 +44,7 @@ const UserForm = ({ edit }) => {
 
   const submit = (data, edit) => {
     const valid = validateEmail(data.email);
+
     if (!data.name) {
       toast(edit ? ERROR_UPDATE_EMPTY : ERROR);
       return;
@@ -56,24 +53,21 @@ const UserForm = ({ edit }) => {
       toast(edit ? ERROR_UPDATE_EMAIL : ERROR_EMAIL);
       return;
     } else {
-      if (edit) {
-        loadEditUser();
-      } else {
-        loadCreateUser();
-      }
+      loadService();
     }
   };
 
   useEffect(() => {
     if (!id) return;
     getSingleUser();
-  }, [id, edit]);
+  }, [id]);
 
   return (
     <Layout>
       <InputEl
         type="text"
         name="name"
+        value={user?.name || ""}
         onChange={setValues}
         children="Name"
         placeholder="Enter name"
@@ -81,6 +75,7 @@ const UserForm = ({ edit }) => {
       <InputEl
         type="email"
         name="email"
+        value={user?.email || ""}
         onChange={setValues}
         children="Email"
         placeholder="Enter email"
@@ -89,9 +84,9 @@ const UserForm = ({ edit }) => {
         bg="lightGrey"
         color="black"
         marginTop="15px"
-        onClick={() => submit(user, edit)}
+        onClick={() => submit(user, isEdit)}
       >
-        {edit ? "Save" : "Create"}
+        {isEdit ? "Save" : "Create"}
       </Button>
     </Layout>
   );

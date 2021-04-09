@@ -1,7 +1,7 @@
 import LoginPage from "./containers/LoginPage/LoginPage";
 import { ChakraProvider } from "@chakra-ui/react";
 import Header from "./components/Header/Header";
-import { Route, Switch } from "react-router";
+import { Redirect, Route, Switch } from "react-router";
 import UsersPage from "./containers/UsersPage/UsersPage";
 import UserPage from "./containers/UserPage/UserPage";
 import EditUserPage from "./containers/EditUserPage/EditUserPage";
@@ -12,6 +12,9 @@ function App() {
     <ChakraProvider>
       <Header />
       <Switch>
+        <Route exact path="/">
+          <Redirect to="/users" />
+        </Route>
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/users" component={UsersPage} />
         <Route exact path="/createuser" component={CreateUserPage} />

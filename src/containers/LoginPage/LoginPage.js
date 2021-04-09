@@ -18,7 +18,7 @@ const LoginPage = () => {
     const toaster = validationLogin(email);
     toast(toaster);
     if (toaster.status === "success") {
-      history.push("/users");
+      history.push("/");
     }
   };
 

@@ -3,7 +3,7 @@ import { useHistory } from "react-router";
 import Loader from "../components/Loader/Loader";
 
 const withAuth = (Component) => {
-  return () => {
+  return (props) => {
     const [auth, setAuth] = useState(false);
     const history = useHistory();
 
@@ -15,7 +15,7 @@ const withAuth = (Component) => {
         setAuth(true);
       }
     }, [history]);
-    return <>{auth ? <Component /> : <Loader />}</>;
+    return <>{auth ? <Component {...props}/> : <Loader />}</>;
   };
 };
 
