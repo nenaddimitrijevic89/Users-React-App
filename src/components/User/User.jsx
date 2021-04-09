@@ -1,9 +1,13 @@
 import { Td, Tr } from "@chakra-ui/table";
 import React from "react";
 
-const User = ({ user, detailed }) => {
-  return user ? (
-    <Tr cursor="pointer" _hover={{ background: "#50e3c2", color: "black" }}>
+const User = ({ user, detailed, onClick }) => {
+  return (
+    <Tr
+      cursor="pointer"
+      _hover={{ background: "#50e3c2", color: "black" }}
+      onClick={onClick}
+    >
       <Td>{user.id}</Td>
       <Td>{user.name}</Td>
       <Td>{user.email}</Td>
@@ -13,7 +17,7 @@ const User = ({ user, detailed }) => {
       {detailed && <Td>{user.phone}</Td>}
       {detailed && <Td>{user.website}</Td>}
     </Tr>
-  ): null;
+  );
 };
 
 export default User;

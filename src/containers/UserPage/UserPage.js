@@ -1,8 +1,9 @@
 import { Button } from "@chakra-ui/button";
 import { Container } from "@chakra-ui/layout";
 import { Table, Tbody, Th, Thead, Tr } from "@chakra-ui/table";
+import { useToast } from "@chakra-ui/toast";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import Loader from "../../components/Loader/Loader";
 import User from "../../components/User/User";
 import withAuth from "../../hoc/withAuth";
@@ -11,12 +12,22 @@ import { userService } from "../../services/userService";
 const UserPage = () => {
   const [user, setUser] = useState();
   const [loader, setLoader] = useState(true);
+  const history = useHistory();
   let { id } = useParams();
+  const toast = useToast();
 
   const getSingleUser = async (id) => {
     const fetchedUser = await userService.getUser(id);
     setUser(fetchedUser);
     setLoader(false);
+  };
+
+  const deleteUser = async (id) => {
+    const toaster = await userService.deleteUser(id);
+    toast(toaster);
+    if (toaster.status === "success") {
+      history.push("/users");
+    }
   };
 
   useEffect(() => {
@@ -44,8 +55,12 @@ const UserPage = () => {
           <User user={user} detailed />
         </Tbody>
       </Table>
-      <Button margin="15px">Edit</Button>
-      <Button margin="15px">Delete</Button>
+      <Button margin="15px" onClick={() => history.push(`/users/${id}/edit`)}>
+        Edit
+      </Button>
+      <Button margin="15px" onClick={() => deleteUser(id)}>
+        Delete
+      </Button>
     </Container>
   );
 };

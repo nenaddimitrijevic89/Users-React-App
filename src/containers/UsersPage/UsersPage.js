@@ -38,7 +38,7 @@ const UsersPage = () => {
         </Thead>
         <Tbody>
           {users.map((user) => (
-            <User user={user} key={user.id} />
+            <User user={user} key={user.id} onClick={() => history.push(`users/${user.id}`)}/>
           ))}
         </Tbody>
       </Table>
