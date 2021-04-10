@@ -27,11 +27,11 @@ const UserForm = ({ isEdit }) => {
 
   const loadService = async () => {
     let toaster = null;
-    if (isEdit) {
-      toaster = await userService.editUser(user, id);
-    } else {
-      toaster = await userService.createUser(user);
-    }
+
+    toaster = isEdit
+      ? await userService.editUser(user, id)
+      : await userService.createUser(user);
+
     toast(toaster);
     if (toaster.status === "success") {
       history.push("/users");

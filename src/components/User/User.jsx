@@ -20,4 +20,4 @@ const User = ({ user, detailed, onClick }) => {
   );
 };
 
-export default User;
+export default React.memo(User);

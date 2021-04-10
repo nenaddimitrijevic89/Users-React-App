@@ -9,10 +9,10 @@ const withAuth = (Component) => {
 
     useEffect(() => {
       const email = localStorage.getItem("email");
-      if (!email) {
-        history.push("/login");
-      } else {
+      if (email) {
         setAuth(true);
+      } else {
+        history.push("/login");
       }
     }, [history]);
     return <>{auth ? <Component {...props}/> : <Loader />}</>;

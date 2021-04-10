@@ -1,7 +1,7 @@
 import { Container } from "@chakra-ui/layout";
 import React from "react";
 
-const Layout = ({children}) => {
+const Layout = ({children, ...props}) => {
   return (
     <Container
       p="25px"
@@ -9,6 +9,7 @@ const Layout = ({children}) => {
       borderWidth="3px"
       marginTop="30px"
       borderRadius="10px"
+      {...props}
     >
       {children}
     </Container>
